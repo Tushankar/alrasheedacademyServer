@@ -21,6 +21,8 @@ app.use(
     origin: ["http://localhost:3000", "https://alrasheedacademy.netlify.app"],
     credentials: true,
     allowedHeaders: ["Content-Type", "Authorization"],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    optionsSuccessStatus: 200,
   })
 );
 app.use(express.json());
