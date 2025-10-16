@@ -18,7 +18,7 @@ const renrollRoutes = require("./routes/renroll");
 const app = express();
 app.use(
   cors({
-    origin: ["http://localhost:3000", "http://localhost:5173"],
+    origin: ["http://localhost:3000", "https://alrasheedacademy.netlify.app"],
     credentials: true,
     allowedHeaders: ["Content-Type", "Authorization"],
   })
