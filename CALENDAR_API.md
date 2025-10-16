@@ -1,21 +1,25 @@
 # Calendar Event API Documentation
 
 ## Overview
+
 This API provides endpoints for managing calendar events with support for event types, colors, and date ranges.
 
 ## Base URL
+
 ```
-http://localhost:4000/api/calendar
+https://alrasheedacademyserver.onrender.com/api/calendar
 ```
 
 ## Endpoints
 
 ### 1. Get All Events
+
 **GET** `/events`
 
 Retrieves all calendar events sorted by date.
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -35,15 +39,18 @@ Retrieves all calendar events sorted by date.
 ```
 
 ### 2. Get Events by Date Range
+
 **GET** `/events/range?startDate=YYYY-MM-DD&endDate=YYYY-MM-DD`
 
 Retrieves events within a specific date range.
 
 **Query Parameters:**
+
 - `startDate` (required): Start date in YYYY-MM-DD format
 - `endDate` (required): End date in YYYY-MM-DD format
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -52,14 +59,17 @@ Retrieves events within a specific date range.
 ```
 
 ### 3. Get Single Event
+
 **GET** `/events/:id`
 
 Retrieves a specific event by ID.
 
 **Parameters:**
+
 - `id`: MongoDB ObjectId of the event
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -72,11 +82,13 @@ Retrieves a specific event by ID.
 ```
 
 ### 4. Create Event
+
 **POST** `/events`
 
 Creates a new calendar event.
 
 **Request Body:**
+
 ```json
 {
   "title": "Winter Break",
@@ -89,16 +101,19 @@ Creates a new calendar event.
 ```
 
 **Required Fields:**
+
 - `title`: Event title (string)
 - `date`: Event start date (YYYY-MM-DD)
 - `type`: Event type (string)
 - `color`: Event color identifier (string)
 
 **Optional Fields:**
+
 - `endDate`: Event end date (defaults to start date)
 - `customColor`: Custom hex color (for custom color type)
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -111,14 +126,17 @@ Creates a new calendar event.
 ```
 
 ### 5. Update Event
+
 **PUT** `/events/:id`
 
 Updates an existing event.
 
 **Parameters:**
+
 - `id`: MongoDB ObjectId of the event
 
 **Request Body:** (all fields optional)
+
 ```json
 {
   "title": "Updated Title",
@@ -131,6 +149,7 @@ Updates an existing event.
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -140,14 +159,17 @@ Updates an existing event.
 ```
 
 ### 6. Delete Event
+
 **DELETE** `/events/:id`
 
 Deletes an event.
 
 **Parameters:**
+
 - `id`: MongoDB ObjectId of the event
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -156,11 +178,13 @@ Deletes an event.
 ```
 
 ### 7. Bulk Create Events
+
 **POST** `/events/bulk`
 
 Creates multiple events at once.
 
 **Request Body:**
+
 ```json
 {
   "events": [
@@ -181,6 +205,7 @@ Creates multiple events at once.
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -193,19 +218,19 @@ Creates multiple events at once.
 
 The following event types are predefined:
 
-| Type | Label | Color |
-|------|-------|-------|
-| `none` | No Color (Default) | Gray |
-| `school-closed` | School Closed | Blue (blue-600) |
-| `early-release` | Early Release | Purple (purple-400) |
-| `school-events` | School Events | Yellow (yellow-300) |
-| `nys-exams` | NYS Exams | Orange (orange-300) |
-| `quarter-exams` | Quarter Exams | Orange (orange-400) |
-| `no-busing` | No Busing | Green (green-400) |
-| `staff-development` | Staff Development | Light Blue (blue-200) |
-| `parent-conferences` | Parent Teacher Conferences | Gray (gray-300) |
-| `first-last-day` | First & Last Day of School | Green Border (green-500) |
-| `quarter-end` | Quarter End | Red Border (red-500) |
+| Type                 | Label                      | Color                    |
+| -------------------- | -------------------------- | ------------------------ |
+| `none`               | No Color (Default)         | Gray                     |
+| `school-closed`      | School Closed              | Blue (blue-600)          |
+| `early-release`      | Early Release              | Purple (purple-400)      |
+| `school-events`      | School Events              | Yellow (yellow-300)      |
+| `nys-exams`          | NYS Exams                  | Orange (orange-300)      |
+| `quarter-exams`      | Quarter Exams              | Orange (orange-400)      |
+| `no-busing`          | No Busing                  | Green (green-400)        |
+| `staff-development`  | Staff Development          | Light Blue (blue-200)    |
+| `parent-conferences` | Parent Teacher Conferences | Gray (gray-300)          |
+| `first-last-day`     | First & Last Day of School | Green Border (green-500) |
+| `quarter-end`        | Quarter End                | Red Border (red-500)     |
 
 ## Error Responses
 
@@ -219,6 +244,7 @@ All endpoints return error responses in the following format:
 ```
 
 **Common HTTP Status Codes:**
+
 - `200`: Success
 - `201`: Created
 - `400`: Bad Request (validation error)
@@ -233,6 +259,7 @@ Both calendar components automatically sync with the backend:
 2. **fullscreen-calendar.tsx** - Full-screen calendar with date-fns
 
 ### Features:
+
 - ✅ Add events with color-coded categories
 - ✅ Delete events with confirmation
 - ✅ Multi-day event support (start and end dates)
@@ -243,6 +270,7 @@ Both calendar components automatically sync with the backend:
 ## Setup Instructions
 
 1. **Start the backend server:**
+
    ```bash
    cd server
    npm install
@@ -250,6 +278,7 @@ Both calendar components automatically sync with the backend:
    ```
 
 2. **Start the frontend:**
+
    ```bash
    cd client
    npm install
@@ -268,8 +297,9 @@ Both calendar components automatically sync with the backend:
 You can test the API using tools like Postman, curl, or Thunder Client.
 
 **Example curl request:**
+
 ```bash
-curl -X POST http://localhost:4000/api/calendar/events \
+curl -X POST https://alrasheedacademyserver.onrender.com/api/calendar/events \
   -H "Content-Type: application/json" \
   -d '{
     "title": "Test Event",

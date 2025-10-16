@@ -30,13 +30,13 @@ npm run dev
 Register:
 
 ```powershell
-curl -X POST http://localhost:4000/api/auth/register -H "Content-Type: application/json" -d '{"name":"Alice","email":"alice@example.com","password":"secret123"}'
+curl -X POST https://alrasheedacademyserver.onrender.com/api/auth/register -H "Content-Type: application/json" -d '{"name":"Alice","email":"alice@example.com","password":"secret123"}'
 ```
 
 Login:
 
 ```powershell
-curl -X POST http://localhost:4000/api/auth/login -H "Content-Type: application/json" -d '{"email":"alice@example.com","password":"secret123"}'
+curl -X POST https://alrasheedacademyserver.onrender.com/api/auth/login -H "Content-Type: application/json" -d '{"email":"alice@example.com","password":"secret123"}'
 ```
 
 Security note: Do not commit real credentials to the repository. Keep the `.env` file local and out of source control.

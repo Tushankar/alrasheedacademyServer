@@ -3,8 +3,9 @@
 Complete backend implementation for all 6 enrollment forms.
 
 ## Base URL
+
 ```
-http://localhost:4000/api/forms
+https://alrasheedacademyserver.onrender.com/api/forms
 ```
 
 ---
@@ -14,11 +15,13 @@ http://localhost:4000/api/forms
 ### Endpoints
 
 #### Submit Student Registration
+
 ```http
 POST /api/forms/student-registration
 ```
 
 **Request Body:**
+
 ```json
 {
   "firstName": "John",
@@ -43,24 +46,25 @@ POST /api/forms/student-registration
   "motherPhone": "716-555-0101",
   "motherEmail": "jane@email.com",
   "previousSchoolName": "Previous School",
-  "siblings": [
-    { "name": "Jane Doe", "grade": "3" }
-  ],
+  "siblings": [{ "name": "Jane Doe", "grade": "3" }],
   "printName": "John Doe"
 }
 ```
 
 #### Get All Registrations
+
 ```http
 GET /api/forms/student-registration
 ```
 
 #### Get Single Registration
+
 ```http
 GET /api/forms/student-registration/:id
 ```
 
 #### Delete Registration
+
 ```http
 DELETE /api/forms/student-registration/:id
 ```
@@ -72,11 +76,13 @@ DELETE /api/forms/student-registration/:id
 ### Endpoints
 
 #### Submit Emergency Contact
+
 ```http
 POST /api/forms/emergency-contact
 ```
 
 **Request Body:**
+
 ```json
 {
   "emergencyContact1Name": "Uncle Bob",
@@ -96,16 +102,19 @@ POST /api/forms/emergency-contact
 ```
 
 #### Get All Emergency Contacts
+
 ```http
 GET /api/forms/emergency-contact
 ```
 
 #### Get Single Emergency Contact
+
 ```http
 GET /api/forms/emergency-contact/:id
 ```
 
 #### Delete Emergency Contact
+
 ```http
 DELETE /api/forms/emergency-contact/:id
 ```
@@ -117,11 +126,13 @@ DELETE /api/forms/emergency-contact/:id
 ### Endpoints
 
 #### Submit Health Form
+
 ```http
 POST /api/forms/health-form
 ```
 
 **Request Body:**
+
 ```json
 {
   "insuranceCompany": "Blue Cross",
@@ -163,16 +174,19 @@ POST /api/forms/health-form
 ```
 
 #### Get All Health Forms
+
 ```http
 GET /api/forms/health-form
 ```
 
 #### Get Single Health Form
+
 ```http
 GET /api/forms/health-form/:id
 ```
 
 #### Delete Health Form
+
 ```http
 DELETE /api/forms/health-form/:id
 ```
@@ -184,11 +198,13 @@ DELETE /api/forms/health-form/:id
 ### Endpoints
 
 #### Submit Picture Authorization
+
 ```http
 POST /api/forms/picture-authorization
 ```
 
 **Request Body:**
+
 ```json
 {
   "pictureAuthSignature": "John Doe",
@@ -199,16 +215,19 @@ POST /api/forms/picture-authorization
 ```
 
 #### Get All Picture Authorizations
+
 ```http
 GET /api/forms/picture-authorization
 ```
 
 #### Get Single Picture Authorization
+
 ```http
 GET /api/forms/picture-authorization/:id
 ```
 
 #### Delete Picture Authorization
+
 ```http
 DELETE /api/forms/picture-authorization/:id
 ```
@@ -220,11 +239,13 @@ DELETE /api/forms/picture-authorization/:id
 ### Endpoints
 
 #### Submit Transfer Records Request
+
 ```http
 POST /api/forms/transfer-records
 ```
 
 **Request Body:**
+
 ```json
 {
   "firstName": "John",
@@ -247,16 +268,19 @@ POST /api/forms/transfer-records
 ```
 
 #### Get All Transfer Records
+
 ```http
 GET /api/forms/transfer-records
 ```
 
 #### Get Single Transfer Records
+
 ```http
 GET /api/forms/transfer-records/:id
 ```
 
 #### Delete Transfer Records
+
 ```http
 DELETE /api/forms/transfer-records/:id
 ```
@@ -268,11 +292,13 @@ DELETE /api/forms/transfer-records/:id
 ### Endpoints
 
 #### Submit Tuition Contract
+
 ```http
 POST /api/forms/tuition-contract
 ```
 
 **Request Body:**
+
 ```json
 {
   "guardianFirstName": "Robert",
@@ -295,16 +321,19 @@ POST /api/forms/tuition-contract
 ```
 
 #### Get All Tuition Contracts
+
 ```http
 GET /api/forms/tuition-contract
 ```
 
 #### Get Single Tuition Contract
+
 ```http
 GET /api/forms/tuition-contract/:id
 ```
 
 #### Delete Tuition Contract
+
 ```http
 DELETE /api/forms/tuition-contract/:id
 ```
@@ -314,15 +343,19 @@ DELETE /api/forms/tuition-contract/:id
 ## Response Format
 
 ### Success Response
+
 ```json
 {
   "success": true,
   "message": "Form submitted successfully",
-  "data": { /* form data */ }
+  "data": {
+    /* form data */
+  }
 }
 ```
 
 ### Error Response
+
 ```json
 {
   "success": false,
@@ -357,6 +390,7 @@ DELETE /api/forms/tuition-contract/:id
 ## Database Collections
 
 All forms are stored in separate MongoDB collections:
+
 - `studentregistrations`
 - `emergencycontacts`
 - `healthforms`
@@ -372,38 +406,43 @@ All forms are stored in separate MongoDB collections:
 // Submit Student Registration
 const submitRegistration = async (formData) => {
   try {
-    const response = await fetch('http://localhost:4000/api/forms/student-registration', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
-    });
-    
+    const response = await fetch(
+      "https://alrasheedacademyserver.onrender.com/api/forms/student-registration",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      }
+    );
+
     const data = await response.json();
-    
+
     if (data.success) {
-      toast.success('Registration submitted successfully!');
+      toast.success("Registration submitted successfully!");
     } else {
       toast.error(data.message);
     }
   } catch (error) {
-    console.error('Error:', error);
-    toast.error('Failed to submit registration');
+    console.error("Error:", error);
+    toast.error("Failed to submit registration");
   }
 };
 
 // Get All Registrations
 const getRegistrations = async () => {
   try {
-    const response = await fetch('http://localhost:4000/api/forms/student-registration');
+    const response = await fetch(
+      "https://alrasheedacademyserver.onrender.com/api/forms/student-registration"
+    );
     const data = await response.json();
-    
+
     if (data.success) {
-      console.log('Registrations:', data.registrations);
+      console.log("Registrations:", data.registrations);
     }
   } catch (error) {
-    console.error('Error:', error);
+    console.error("Error:", error);
   }
 };
 ```
