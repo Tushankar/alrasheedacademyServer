@@ -958,19 +958,23 @@ router.get("/cms/:page", async (req, res) => {
               breadcrumb: "Home › Bus Policy",
             },
             content: {
-              introduction: "Our bus transportation policy ensures the safety and well-being of all students.",
+              introduction:
+                "Our bus transportation policy ensures the safety and well-being of all students.",
               sections: [
                 {
                   title: "Bus Safety Rules",
-                  content: "All students must follow safety rules while on the bus.",
+                  content:
+                    "All students must follow safety rules while on the bus.",
                 },
                 {
                   title: "Boarding and Dismissal",
-                  content: "Students should arrive on time and board the bus in an orderly manner.",
+                  content:
+                    "Students should arrive on time and board the bus in an orderly manner.",
                 },
                 {
                   title: "Conduct on Bus",
-                  content: "Students are expected to behave respectfully and cooperatively.",
+                  content:
+                    "Students are expected to behave respectfully and cooperatively.",
                 },
               ],
             },
