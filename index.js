@@ -19,13 +19,20 @@ const navbarRoutes = require("./routes/navbar");
 const app = express();
 app.use(
   cors({
-    origin: ["http://localhost:3000", "https://alrasheedacademy.netlify.app"],
+    origin:
+      process.env.NODE_ENV === "production"
+        ? ["https://alrasheedacademy.netlify.app"]
+        : ["http://localhost:3000", "https://alrasheedacademy.netlify.app"],
     credentials: true,
     allowedHeaders: ["Content-Type", "Authorization"],
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
     optionsSuccessStatus: 200,
+    maxAge: 3600,
   })
 );
+
+// Handle preflight explicitly
+app.options("*", cors());
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ limit: "10mb", extended: true }));
 app.use(cookieParser());
