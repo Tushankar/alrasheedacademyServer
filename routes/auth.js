@@ -2035,4 +2035,27 @@ router.put("/cms/curricular", verifyToken, async (req, res) => {
   }
 });
 
+// POST /api/auth/cms/hero - Update hero CMS content (admin only)
+router.post("/cms/hero", verifyToken, async (req, res) => {
+  try {
+    if (req.user.role !== "admin") {
+      return res.status(403).json({ error: "Access denied" });
+    }
+
+    const heroData = req.body;
+    if (!heroData)
+      return res.status(400).json({ error: "Hero data is required" });
+
+    const cms = await CMS.findOneAndUpdate(
+      { page: "hero" },
+      { $set: { content: heroData, page: "hero" } },
+      { upsert: true, new: true }
+    );
+    res.json(cms.content);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
 module.exports = router;

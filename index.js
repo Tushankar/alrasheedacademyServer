@@ -21,8 +21,17 @@ app.use(
   cors({
     origin:
       process.env.NODE_ENV === "production"
-        ? ["https://alrasheedacademy.netlify.app"]
-        : ["http://localhost:3000", "https://alrasheedacademy.netlify.app"],
+        ? [
+            "https://alrasheedacademy.netlify.app",
+            "https://alrasheedacademy.onrender.com",
+            "https://alrasheedacademyserver.onrender.com",
+          ]
+        : [
+            "http://localhost:3000",
+            "https://alrasheedacademy.netlify.app",
+            "https://alrasheedacademy.onrender.com",
+            "https://alrasheedacademyserver.onrender.com",
+          ],
     credentials: true,
     allowedHeaders: ["Content-Type", "Authorization"],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
