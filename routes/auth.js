@@ -2066,6 +2066,29 @@ router.put("/cms/curricular", verifyToken, async (req, res) => {
   }
 });
 
+// POST /api/auth/cms/about-us - Update about-us CMS content (admin only)
+router.post("/cms/about-us", verifyToken, async (req, res) => {
+  try {
+    if (req.user.role !== "admin") {
+      return res.status(403).json({ error: "Access denied" });
+    }
+
+    const aboutUsData = req.body;
+    if (!aboutUsData)
+      return res.status(400).json({ error: "About us data is required" });
+
+    const cms = await CMS.findOneAndUpdate(
+      { page: "about-us" },
+      { $set: { content: aboutUsData, page: "about-us" } },
+      { upsert: true, new: true }
+    );
+    res.json(cms.content);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
 // POST /api/auth/cms/hero - Update hero CMS content (admin only)
 router.post("/cms/hero", verifyToken, async (req, res) => {
   try {
