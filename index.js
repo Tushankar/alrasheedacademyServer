@@ -14,6 +14,7 @@ const volunteerApplicationRoutes = require("./routes/volunteerApplications");
 const surveyRoutes = require("./routes/surveys");
 const formRoutes = require("./routes/forms");
 const renrollRoutes = require("./routes/renroll");
+const navbarRoutes = require("./routes/navbar");
 
 const app = express();
 app.use(
@@ -25,7 +26,8 @@ app.use(
     optionsSuccessStatus: 200,
   })
 );
-app.use(express.json());
+app.use(express.json({ limit: "10mb" }));
+app.use(express.urlencoded({ limit: "10mb", extended: true }));
 app.use(cookieParser());
 
 const PORT = process.env.PORT || 4000;
@@ -55,6 +57,7 @@ app.use("/api/volunteer-applications", volunteerApplicationRoutes);
 app.use("/api/surveys", surveyRoutes);
 app.use("/api/forms", formRoutes);
 app.use("/api/renroll", renrollRoutes);
+app.use("/api/navbar", navbarRoutes);
 console.log("✅ Forms routes registered at /api/forms");
 console.log("✅ Renroll routes registered at /api/renroll");
 
