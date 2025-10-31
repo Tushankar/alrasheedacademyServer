@@ -2,11 +2,49 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
+const multer = require("multer");
+const path = require("path");
+const fs = require("fs");
 
 const User = require("../models/User");
 const { CMS } = require("../models/User");
 
 const router = express.Router();
+
+// Ensure uploads directory exists
+const uploadsDir = path.join(__dirname, "../uploads");
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir, { recursive: true });
+}
+
+// Configure multer for CMS image uploads
+const cmsStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, uploadsDir);
+  },
+  filename: (req, file, cb) => {
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+    cb(null, "cms-" + uniqueSuffix + path.extname(file.originalname));
+  },
+});
+
+const cmsUpload = multer({
+  storage: cmsStorage,
+  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
+  fileFilter: (req, file, cb) => {
+    const allowedTypes = /jpeg|jpg|png|gif|webp/;
+    const extname = allowedTypes.test(
+      path.extname(file.originalname).toLowerCase()
+    );
+    const mimetype = allowedTypes.test(file.mimetype);
+
+    if (mimetype && extname) {
+      return cb(null, true);
+    } else {
+      cb(new Error("Only image files are allowed!"));
+    }
+  },
+});
 
 // Middleware to verify JWT token
 const verifyToken = (req, res, next) => {
@@ -2111,5 +2149,34 @@ router.post("/cms/hero", verifyToken, async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 });
+
+// POST /api/auth/cms/upload-image - Upload CMS image (admin only)
+router.post(
+  "/cms/upload-image",
+  verifyToken,
+  cmsUpload.single("image"),
+  async (req, res) => {
+    try {
+      if (req.user.role !== "admin") {
+        return res.status(403).json({ error: "Access denied" });
+      }
+
+      if (!req.file) {
+        return res.status(400).json({ message: "No file uploaded" });
+      }
+
+      const imageUrl = `/uploads/${req.file.filename}`;
+
+      res.status(201).json({
+        message: "Image uploaded successfully",
+        imageUrl,
+        filename: req.file.filename,
+      });
+    } catch (error) {
+      console.error("Error uploading CMS image:", error);
+      res.status(500).json({ message: "Server error" });
+    }
+  }
+);
 
 module.exports = router;
