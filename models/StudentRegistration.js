@@ -77,6 +77,9 @@ const studentRegistrationSchema = new mongoose.Schema({
     },
   ],
 
+  // Photo
+  studentPhoto: String, // Path to uploaded photo file
+
   // Signature
   printName: String,
 
